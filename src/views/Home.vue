@@ -11,7 +11,7 @@
          </template>
      </el-table-column>
     </el-table>
-  <MyForm :table-data="tableData"></MyForm>
+  <MyForm @submitForm="submitForm"></MyForm>
 </div>
 </div>
 </template>
@@ -66,6 +66,11 @@ import MyForm from '@/components/MyForm.vue'
               return item.name
             })
           },
+        },
+        methods: {
+            submitForm(name,number){
+                this.tableData.push({'name':name, 'number':number})
+            }
         }
     }
 </script>
