@@ -41,12 +41,18 @@ export default {
     }
   },
   methods:{
-       submitForm(){
-          this.tableData.push({
-          name:this.name,
-          number:this.number
-        })      
-         this.visible=false
+        submitForm() {
+      if (this.name === "") {
+        alert('请输入商品名称')
+      } else if (/^\D+$/.test(this.number)) {
+        alert('销量框只能输入数字')
+      } else {
+        this.tableData.push({
+          name: this.name,
+          number: this.number
+        })
+        this.resetForm()
+      }
     },
         resetForm(){
           this.visible=false      
