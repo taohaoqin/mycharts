@@ -2,16 +2,19 @@
   <div>
       <div class="Add" @click='toAdd'>+</div> 
     <el-dialog width='20%' :visible.sync="visible" title="添加栏">
-   <el-form  label-width="50px">
-  <el-form-item label="种类">
-    <el-input  v-model="name"></el-input>
+   <el-form  ref="tableDataForm"
+        :model="tableDataForm"
+        :rules="rules"
+         label-width="50px">
+  <el-form-item label="种类" prop="name">
+    <el-input v-model="tableDataForm.name"></el-input>
   </el-form-item>
-  <el-form-item label="销量" >
-    <el-input  v-model="number"></el-input>
+  <el-form-item label="销量" prop="number">
+    <el-input v-model.number="tableDataForm.number"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm">确定</el-button>
-    <el-button @click="resetForm">取消</el-button>
+    <el-button type="primary" @click="submitForm('tableDataForm')">确定</el-button>
+    <el-button @click="resetForm('tableDataForm')">取消</el-button>
   </el-form-item>
 </el-form>
    </el-dialog> 
@@ -30,33 +33,36 @@ export default {
   data(){
     return{
          visible:false,
-         name:'',
-         number:'',   
+         tableDataForm: {
+        name: '',
+        number: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' },
+        ],
+        number: [
+          { required: true, type: 'number', message: '请输入数字', trigger: 'blur' },
+        ]
+      }   
     }
   },
   watch:{
         visible(){
-          this.name = ''
-          this.number = ''  
+          this.tableDataForm.name = ''
+          this.tableDataForm.number = ''  
     }
   },
   methods:{
-        submitForm() {
-       if (this.name === "" || /^\d+$/.test(this.name)) { // 名称不能纯数字或空
-        alert('请输入正确的名称')
-      } else if (this.number === "") { // 销量不能为空
-        alert('请输入销量')
-      } else if (!/^\d+$/.test(this.number)) { // 销量只能是数字
-        alert('销量框只能输入数字')
-      }else {
-        this.tableData.push({
-          name: this.name,
-          number: this.number
-        })
-        this.resetForm()
-      }
+        submitForm(formName) {
+       this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.tableData.push({ name: this.tableDataForm.name, number: this.tableDataForm.number })
+          this.visible=false 
+        } 
+      })
     },
-        resetForm(){
+        resetForm(formName){
           this.visible=false      
     },
         toAdd(){
