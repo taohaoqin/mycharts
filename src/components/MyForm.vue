@@ -54,3 +54,13 @@ export default {
   }
 }
 </script>
+<style>
+.Add{
+     height: 45px;
+     color: #606266;
+     border-bottom: 1px solid #ebeef5;
+     font-size: 25px;
+     line-height: 45px;
+     cursor: pointer;
+ } 
+</style>
