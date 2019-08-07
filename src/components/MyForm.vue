@@ -39,10 +39,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' },
+          { required: true, message: '请输入商品的名称', trigger: 'blur' },
         ],
         number: [
-          { required: true, type: 'number', message: '请输入数字', trigger: 'blur' },
+          { required: true, type: 'number', message: '请输入数量', trigger: 'blur' },
         ]
       }   
     }
